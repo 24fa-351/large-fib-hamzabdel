@@ -1,7 +1,47 @@
 #include <stdio.h>
-#include <stdint.h>
+#include <stdlib.h>
 
-int main(int argc, char* argv[]) {
-   printf("Hello!\n");
-   return 0;
+unsigned long long int fibonacci_recursive(unsigned long long int number);
+unsigned long long int fibonacci_iterative(unsigned long long int number);
+
+int main(int argc, char *argv[]) {
+    if (argc != 3) {
+        printf("Usage: %s <integer> <r/i>\n", argv[0]);
+        return 1;
+
+    }
+
+    unsigned long long int input_num = atoll(argv[1]);
+    char method = argv[2][0];
+
+    unsigned long long int fibonacci_input =input_num - 1; //makes sequence start from fib(1) = 1
+
+    unsigned long long int result;
+    if (method == 'r') {
+        result = fibonacci_recursive(fibonacci_input);
+    } else if  (method == 'i') {
+        result = fibonacci_iterative(fibonacci_input);
+    } else {
+        return 1;
+    }
+
+    printf("%llu\n", result); //outputs in unsigned long long int form
+    return 0;
+}
+
+unsigned long long int fibonacci_recursive(unsigned long long int number) {
+    if (number == 0) return 0;
+    if (number == 1) return 1;
+    return fibonacci_recursive(number - 1) + fibonacci_recursive(number - 2);
+}
+
+unsigned long long int fibonacci_iterative(unsigned long long int number) {
+    if (number <= 1) return number;
+    unsigned long long int a = 0, b = 1, next;
+    for (unsigned long long int i = 2; i <= number; i++) {
+        next = a + b;
+        a = b;
+        b = next;
+    }
+    return b;
 }
