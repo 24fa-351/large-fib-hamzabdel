@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     char method = argv[2][0];
 
     unsigned long long int fibonacci_input
-        = input_num - 1; // makes sequence start from fib(1) = 1
+        = input_num - 1; // sequence starts from fib(1) = 1
 
     unsigned long long int result;
     if (method == 'r') {
@@ -23,10 +23,11 @@ int main(int argc, char* argv[])
     } else if (method == 'i') {
         result = fibonacci_iterative(fibonacci_input);
     } else {
+        printf("Invalid method! Use 'r' for recursive or 'i' for iterative.\n");
         return 1;
     }
 
-    printf("%llu\n", result); // outputs in unsigned long long int form
+    printf("%llu\n", result); // outputs results as an unsigned long long int
     return 0;
 }
 
@@ -43,11 +44,13 @@ unsigned long long int fibonacci_iterative(unsigned long long int number)
 {
     if (number <= 1)
         return number;
-    unsigned long long int a = 0, b = 1, next;
+
+    unsigned long long int previous = 0, current = 1, next_term;
+
     for (unsigned long long int i = 2; i <= number; i++) {
-        next = a + b;
-        a = b;
-        b = next;
+        next_term = previous + current;
+        previous = current;
+        current = next_term;
     }
-    return b;
+    return current;
 }
